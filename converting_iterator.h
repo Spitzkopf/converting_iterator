@@ -64,14 +64,20 @@ namespace ci
 	};
 
 	template<typename T, typename ConversionPolicy, typename C>
-	auto ci_begin(C&& container) -> converting_iterator<T, decltype(std::forward<C>(container).begin()), ConversionPolicy>
+	auto begin(C&& container) -> converting_iterator<T, decltype(std::forward<C>(container).begin()), ConversionPolicy>
 	{
 		return{ std::forward<C>(container).begin() };
 	}
 
 	template<typename T, typename ConversionPolicy, typename C>
-	auto ci_end(C&& container) -> converting_iterator<T, decltype(std::forward<C>(container).end()), ConversionPolicy>
+	auto end(C&& container) -> converting_iterator<T, decltype(std::forward<C>(container).end()), ConversionPolicy>
 	{
 		return{ std::forward<C>(container).end() };
+	}
+
+	template<typename T, typename ConversionPolicy, typename Iter>
+	auto from_iterator(Iter iterator) -> converting_iterator<T, Iter, ConversionPolicy>
+	{
+		return{ std::move(iterator) };
 	}
 }
